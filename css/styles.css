@@ -115,6 +115,7 @@ img {
   grid-template-columns: 1fr;
   gap: 5rem;
   margin-bottom: 3rem;
+  height: 100vh;
 }
 
 
@@ -126,7 +127,7 @@ img {
   .main__container {
     grid-template-columns: 2fr 1fr 1fr;
     grid-template-rows: 2fr 1fr;
-    height: 105vh;
+    height: 90vh;
   }
   .video {
     grid-column: 1/3;
