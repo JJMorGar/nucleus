@@ -48,7 +48,7 @@ img {
   display: block;
 }
 [class$="__container"] {
-  max-width: 110rem;
+  max-width: 130rem;
   margin: auto;
   width: 90%;
 }
@@ -115,7 +115,6 @@ img {
   grid-template-columns: 1fr;
   gap: 5rem;
   margin-bottom: 3rem;
-  height: 100vh;
 }
 
 
@@ -125,7 +124,7 @@ img {
 }
 @media (min-width: 900px) {
   .main__container {
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 2fr 1fr;
     height: 90vh;
   }
@@ -146,10 +145,11 @@ img {
     height: 55rem;
   }
   .comentarios {
+    padding-right: 1rem;
     grid-column: 3/4;
   }
   .descripccion {
-    height:55rem;
+    padding-right: 1rem;
     overflow: auto;
   }
 }
@@ -163,6 +163,7 @@ img {
   display: flex;
   gap: 2rem;
   padding: 1rem;
+  align-items: center;
 }
 
 .comentario__nombre {
@@ -179,8 +180,10 @@ img {
 
 .card{
   border: solid 2px rgba(255, 255, 255, 0.194);
-  min-width: 20rem;
+  min-width: 30rem;
+  height: 20rem;
   border-radius: 1rem;
+  overflow: hidden;
 }
 
 
@@ -280,4 +283,6 @@ img {
 }
 
 
-
+.comentario__texto.descripccion-card {
+  min-height: 30rem;
+}

@@ -1,18 +1,23 @@
 const videoIframe = document.querySelector(".vide__iframe");
 const search = document.querySelector(".header__search");
-
-const getUrlRelacionados = (id) =>
-  `https://youtube138.p.rapidapi.com/video/related-contents/?id=${id}&hl=en&gl=US`;
+const recomendados = document.querySelector(".recomendados");
+const comentarios = document.querySelector(".comentarios")
 
 const getUrlById = (id) => `https://www.youtube.com/embed/${id}`;
 
-const getUrlComentarios = (id) =>
-  `https://youtube138.p.rapidapi.com/video/comments/?id=${id}&hl=en&gl=US`;
-
-const getUrlSearch = (busqueda) => {
+const querySearch = (busqueda) => {
   const busquedaLimpia = busqueda.replace("&", "%26");
   return `https://youtube138.p.rapidapi.com/search/?q=${busquedaLimpia}&hl=en&gl=US`;
 };
+
+const queryRelatedVideos = (id) =>
+  `https://youtube138.p.rapidapi.com/video/related-contents/?id=${id}&hl=en&gl=US`;
+
+const queryComentarios = (id) =>
+  `https://youtube138.p.rapidapi.com/video/comments/?id=${id}&hl=en&gl=US`;
+
+const queryDescripccion = (id) =>
+  `https://youtube138.p.rapidapi.com/video/details/?id=${id}&hl=en&gl=US`;
 
 const options = {
   headers: {
@@ -24,7 +29,7 @@ const options = {
 search.addEventListener("submit", (e) => {
   e.preventDefault();
   const busqueda = document.querySelector("#search").value;
-  const urlSearch = getUrlSearch(busqueda);
+  const urlSearch = querySearch(busqueda);
   cargarVideo(urlSearch);
 });
 
@@ -37,28 +42,76 @@ const getData = async (url) => {
   }
 };
 
-const cargarComentarios = async (urlComentarios) => {
-  const data = await (await fetch(urlComentarios, options)).json();
-  console.log(data);
-  return data;
+const cargarComentarios = async (api) => {
+  const data = await (await fetch(api, options)).json();
+     
+  const cometarios = data.comments.map(comment => {
+    const {author, content} = comment
+    const div = document.createElement("div")
+    div.classList.add("comentarios__element")
+
+    const elment = `
+        <div class="comentarios__foto">
+          <img src="" alt="" />
+        </div>
+        <div class="comentario__contenido">
+          <h3 class="comentario__nombre">${author.title} </h3>
+          <p class="comentario__texto">${content}</p>
+        </div>
+    `
+    div.innerHTML = elment
+    return div
+  })
+  comentarios.append(...cometarios)
 };
 
-const cargarRelatedVideos = async (urlRelatedVideos) => {
-  const data = await (await fetch(urlRelatedVideos, options)).json();
-  console.log(data);
+const cargarRelatedVideos = async (api) => {
+  const data = await (await fetch(api, options)).json();
+  const videos = data.contents.map((e) => {
+    const card = document.createElement("div");
+    card.classList.add("card");
+    const video = `
+      <iframe
+        width="100%"
+        height="100%"
+        src="https://www.youtube.com/embed/${e.video.videoId}"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+    `;
+    card.innerHTML = video;
+    return card;
+  });
+  recomendados.innerHTML = ""
+  recomendados.append(...videos);
+};
+
+const cargarDescription = async (api) => {
+  const data = await (await fetch(api, options)).json();
+  const { description } = data;
+  const domDescription = document.querySelector(
+    ".comentario__texto.descripccion-card"
+  );
+  domDescription.innerHTML = `${description}`;
   return data;
 };
 
 const cargarVideo = async (urlSearch) => {
   const data = await getData(urlSearch);
   const idVideo = data.contents[0].video.videoId;
-
   const urlVideo = getUrlById(idVideo);
+  cargarComentarios(queryComentarios(idVideo));
+  cargarRelatedVideos(queryRelatedVideos(idVideo));
+  cargarDescription(queryDescripccion(idVideo));
   videoIframe.src = urlVideo;
-
-  const urlVideosRelated = getUrlRelacionados(idVideo);
-  cargarComentarios(urlVideosRelated)
-  const urlComentarios = getUrlComentarios(idVideo);
-  cargarRelatedVideos(urlComentarios)
-
 };
+
+
+
+
+
+async function asd (){
+  const data = await fetch(das)
+}
