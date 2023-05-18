@@ -1,5 +1,5 @@
+const videoIframe = document.querySelector(".vide__iframe");
 const search = document.querySelector(".header__search");
-const busqueda = document.querySelector("#search").value;
 
 const getUrlRelacionados = (id) =>
   `https://youtube138.p.rapidapi.com/video/related-contents/?id=${id}&hl=en&gl=US`;
@@ -21,7 +21,6 @@ const options = {
   },
 };
 
-
 search.addEventListener("submit", (e) => {
   e.preventDefault();
   const busqueda = document.querySelector("#search").value;
@@ -29,28 +28,37 @@ search.addEventListener("submit", (e) => {
   cargarVideo(urlSearch);
 });
 
-
-
 const getData = async (url) => {
   try {
     const data = await (await fetch(url, options)).json();
-    return data
+    return data;
   } catch (error) {
     console.error(error);
   }
 };
 
+const cargarComentarios = async (urlComentarios) => {
+  const data = await (await fetch(urlComentarios, options)).json();
+  console.log(data);
+  return data;
+};
+
+const cargarRelatedVideos = async (urlRelatedVideos) => {
+  const data = await (await fetch(urlRelatedVideos, options)).json();
+  console.log(data);
+  return data;
+};
 
 const cargarVideo = async (urlSearch) => {
   const data = await getData(urlSearch);
   const idVideo = data.contents[0].video.videoId;
+
   const urlVideo = getUrlById(idVideo);
-  const videoIframe = document.querySelector(".vide__iframe");
   videoIframe.src = urlVideo;
-  console.log(videoIframe);
+
+  const urlVideosRelated = getUrlRelacionados(idVideo);
+  cargarComentarios(urlVideosRelated)
+  const urlComentarios = getUrlComentarios(idVideo);
+  cargarRelatedVideos(urlComentarios)
+
 };
-
-
-
-
-
