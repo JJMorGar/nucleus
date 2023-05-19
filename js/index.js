@@ -2,6 +2,7 @@ const videoIframe = document.querySelector(".vide__iframe");
 const search = document.querySelector(".header__search");
 const recomendados = document.querySelector(".recomendados");
 const comentarios = document.querySelector(".comentarios")
+const submit = document.querySelector(".header__submit")
 
 const getUrlById = (id) => `https://www.youtube.com/embed/${id}`;
 
@@ -26,12 +27,11 @@ const options = {
   },
 };
 
-search.addEventListener("click", (e) => {
+submit.addEventListener("click", (e) => {
   e.preventDefault();
   const busqueda = document.querySelector("#search").value;
   const urlSearch = querySearch(busqueda);
   cargarVideo(urlSearch);
-  e.stopPropagation()
 });
 
 const getData = async (url) => {
@@ -45,9 +45,9 @@ const getData = async (url) => {
 
 const cargarComentarios = async (api) => {
   const data = await (await fetch(api, options)).json();
-     
+
   const cometarios = data.comments.map(comment => {
-    const {author, content} = comment
+    const { author, content } = comment
     const div = document.createElement("div")
     div.classList.add("comentarios__element")
 
@@ -110,9 +110,3 @@ const cargarVideo = async (urlSearch) => {
 };
 
 
-
-
-
-async function asd (){
-  const data = await fetch(das)
-}
