@@ -21,7 +21,7 @@ const queryDescripccion = (id) =>
 
 const options = {
   headers: {
-    "X-RapidAPI-Key": "30222f5993msh1220c26d88a52b7p1cfb1cjsn21d430b9fbcf",
+    "X-RapidAPI-Key": "2a11985f63msh46971c0814068b1p18da45jsn02bd2bf07f99",
     "X-RapidAPI-Host": "youtube138.p.rapidapi.com",
   },
 };
