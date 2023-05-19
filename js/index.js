@@ -30,6 +30,7 @@ const options = {
 submit.addEventListener("click", (e) => {
   e.preventDefault();
   const busqueda = document.querySelector("#search").value;
+  console.log(busqueda);
   const urlSearch = querySearch(busqueda);
   cargarVideo(urlSearch);
 });
