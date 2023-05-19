@@ -26,11 +26,12 @@ const options = {
   },
 };
 
-search.addEventListener("submit", (e) => {
+search.addEventListener("click", (e) => {
   e.preventDefault();
   const busqueda = document.querySelector("#search").value;
   const urlSearch = querySearch(busqueda);
   cargarVideo(urlSearch);
+  e.stopPropagation()
 });
 
 const getData = async (url) => {
