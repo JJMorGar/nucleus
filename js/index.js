@@ -107,3 +107,11 @@ const cargarVideo = async (urlSearch) => {
   cargarDescription(queryDescripccion(idVideo));
   videoIframe.src = urlVideo;
 };
+
+
+
+
+
+async function asd (){
+  const data = await fetch(das)
+}
